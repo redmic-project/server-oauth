@@ -90,7 +90,7 @@ deploy-dev:
     DOCKER_DRIVER: overlay2
     SSH_REMOTE: ${DEV_SSH_REMOTE}
     SERVICE: ${CI_PROJECT_NAME}
-    IMAGE_NAME: ${DOCKER_ENV_CI_REGISTRY_IMAGE}
+    IMAGE_NAME: ${CI_REGISTRY_IMAGE}
     IMAGE_TAG: ${CI_COMMIT_SHA}
     COMPOSE_FILE: docker-compose.tmpl.yml:docker-compose.dev.yml
   services:
@@ -110,7 +110,7 @@ deploy-supporting-branch:
     DOCKER_DRIVER: overlay2
     SSH_REMOTE: ${DEV_SSH_REMOTE}
     SERVICE: ${CI_PROJECT_NAME}
-    IMAGE_NAME: ${DOCKER_ENV_CI_REGISTRY_IMAGE}
+    IMAGE_NAME: ${CI_REGISTRY_IMAGE}
     IMAGE_TAG: ${CI_COMMIT_SHA}
     COMPOSE_FILE: docker-compose.tmpl.yml:docker-compose.dev.yml
   services:
@@ -134,7 +134,7 @@ deploy-pro:
     DOCKER_DRIVER: overlay2
     SSH_REMOTE: ${PRO_SSH_REMOTE}
     SERVICE: ${CI_PROJECT_NAME}
-    IMAGE_NAME: ${DOCKER_ENV_CI_REGISTRY_IMAGE}
+    IMAGE_NAME: ${CI_REGISTRY_IMAGE}
     IMAGE_TAG: ${CI_COMMIT_TAG}
     COMPOSE_FILE: docker-compose.tmpl.yml:docker-compose.prod.yml
   services:
