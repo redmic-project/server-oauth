@@ -8,7 +8,7 @@ maven-build:
   stage: build
   image: redmic/maven-gitlab
   variables:
-    MAVEN_REPO_LOCAL: .m2/repository
+    MAVEN_OPTS: -Dmaven.repo.local=.m2/repository
     SPRING_PROFILES_ACTIVE: test
     SPRING_DATASOURCE_USERNAME: ${DEV_SPRING_DATASOURCE_USERNAME}
     SPRING_DATASOURCE_PASSWORD: ${DEV_SPRING_DATASOURCE_PASSWORD}
