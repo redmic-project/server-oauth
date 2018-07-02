@@ -9,14 +9,15 @@ maven-build:
   image: redmic/maven-gitlab
   variables:
     SPRING_PROFILES_ACTIVE: test
-    MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Dspring.datasource.username=${DEV_SPRING_DATASOURCE_USERNAME} -Dspring.datasource.password=${DEV_SPRING_DATASOURCE_PASSWORD}"
+    SPRING_DATASOURCE_USERNAME: ${DEV_SPRING_DATASOURCE_USERNAME}
+    SPRING_DATASOURCE_PASSWORD: ${DEV_SPRING_DATASOURCE_PASSWORD}
   only:
     - branches
   cache:
     paths:
       - .m2/repository/
   script:
-    - mvn verify ${MAVEN_OPTS} spring-boot:repackage -B ${MAVEN_OPTS}
+    - mvn verify spring-boot:repackage -B
     - "COVERAGE=$(xmllint --html --xpath '//table[@id=\"coveragetable\"]/tfoot//td[@class=\"ctr2\"][1]/text()' target/site/jacoco/index.html)"
     - 'echo "Coverage: ${COVERAGE}"'
   after_script:
@@ -96,7 +97,10 @@ deploy-dev:
   services:
     - docker:dind
   script:
-    - deploy.sh SPRING_PROFILES_ACTIVE=pre IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} SPRING_DATASOURCE_USERNAME=${DEV_SPRING_DATASOURCE_USERNAME} SPRING_DATASOURCE_PASSWORD=${DEV_SPRING_DATASOURCE_PASSWORD}
+    - >
+      deploy.sh IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
+      SPRING_PROFILES_ACTIVE=pre SPRING_DATASOURCE_USERNAME=${DEV_SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD=${DEV_SPRING_DATASOURCE_PASSWORD}
   environment:
     name: dev
     url: https://appdev.${DEV_PUBLIC_HOSTNAME}/api/${CI_PROJECT_NAME}
@@ -116,7 +120,10 @@ deploy-supporting-branch:
   services:
     - docker:dind
   script:
-    - deploy.sh SPRING_PROFILES_ACTIVE=pre IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} SPRING_DATASOURCE_USERNAME=${DEV_SPRING_DATASOURCE_USERNAME} SPRING_DATASOURCE_PASSWORD=${DEV_SPRING_DATASOURCE_PASSWORD}
+    - >
+      deploy.sh IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
+      SPRING_PROFILES_ACTIVE=pre SPRING_DATASOURCE_USERNAME=${DEV_SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD=${DEV_SPRING_DATASOURCE_PASSWORD}
   environment:
     name: dev
     url: https://appdev.${DEV_PUBLIC_HOSTNAME}/api/${CI_PROJECT_NAME}
@@ -140,7 +147,10 @@ deploy-pro:
   services:
     - docker:dind
   script:
-    - deploy.sh SPRING_PROFILES_ACTIVE=prod IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE} SPRING_DATASOURCE_USERNAME=${PRO_SPRING_DATASOURCE_USERNAME} SPRING_DATASOURCE_PASSWORD=${PRO_SPRING_DATASOURCE_PASSWORD}
+    - >
+      deploy.sh IMAGE_NAME=${IMAGE_NAME} IMAGE_TAG=${IMAGE_TAG} COMPOSE_FILE=${COMPOSE_FILE}
+      SPRING_PROFILES_ACTIVE=prod SPRING_DATASOURCE_USERNAME=${PRO_SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD=${PRO_SPRING_DATASOURCE_PASSWORD}
   environment:
     name: pro
     url: https://${PRO_PUBLIC_HOSTNAME}/api/${CI_PROJECT_NAME}
