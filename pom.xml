@@ -33,6 +33,8 @@
 		<!-- Plugins -->
 		<jacoco.version>0.8.1</jacoco.version>
 		
+		<!-- Environment variables -->
+		<env.MAVEN_REPO_URL>https://artifactory.redmic.net/artifactory</env.MAVEN_REPO_URL>
 	</properties>
 
 	<dependencies>
@@ -79,6 +81,17 @@
 		    <groupId>io.micrometer</groupId>
 		    <artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
+		
+		<!-- Logs -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+		</dependency>
 
 		<!-- tests -->
 
@@ -88,7 +101,19 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
+	<distributionManagement>
+		<repository>
+			<id>central</id>
+			<name>redmic-releases</name>
+			<url>${env.MAVEN_REPO_URL}/libs-release-local</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>redmic-snapshots</name>
+			<url>${env.MAVEN_REPO_URL}/libs-snapshot-local</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
 	<build>
 		<plugins>
 			<plugin>
