@@ -109,7 +109,7 @@ container-scanning:
 
 deploy-dev:
   stage: deploy
-  image: registry.gitlab.com/redmic-project/docker/deploy-docker
+  image: registry.gitlab.com/redmic-project/docker/docker-deploy
   variables:
     DOCKER_DRIVER: overlay2
     SSH_REMOTE: ${DEV_SSH_REMOTE}
@@ -132,7 +132,7 @@ deploy-dev:
 
 deploy-supporting-branch:
   stage: deploy
-  image: registry.gitlab.com/redmic-project/docker/deploy-docker
+  image: registry.gitlab.com/redmic-project/docker/docker-deploy
   variables:
     DOCKER_DRIVER: overlay2
     SSH_REMOTE: ${DEV_SSH_REMOTE}
@@ -159,7 +159,7 @@ deploy-supporting-branch:
 
 deploy-pro:
   stage: deploy
-  image: registry.gitlab.com/redmic-project/docker/deploy-docker
+  image: registry.gitlab.com/redmic-project/docker/docker-deploy
   variables:
     DOCKER_DRIVER: overlay2
     SSH_REMOTE: ${PRO_SSH_REMOTE}
