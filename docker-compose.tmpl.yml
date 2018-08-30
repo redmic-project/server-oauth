@@ -9,10 +9,11 @@ services:
       - SPRING_PROFILES_ACTIVE
       - SPRING_DATASOURCE_USERNAME
       - SPRING_DATASOURCE_PASSWORD
-      - JAVA_OPTS=-Xmx768m -Xss768m
+      - JAVA_OPTS=-XX:MaxRAMFraction=1
     networks:
       - postgres-net
       - redmic-net
+      - traefik-net
     healthcheck:
       test: wget --spider -S -t 3 http://localhost:${MICROSERVICE_PORT}/api/${MICROSERVICE_NAME}/actuator/health
       interval: 30s
@@ -24,4 +25,6 @@ networks:
   postgres-net:
     external: true
   redmic-net:
+    external: true
+  traefik-net:
     external: true
