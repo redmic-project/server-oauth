@@ -2,8 +2,10 @@ version: '3.5'
 
 services:
   oauth:
-    networks:
-      - traefik-net
+    ports:
+      - target: ${MICROSERVICE_PORT}
+        published: ${MICROSERVICE_PORT}
+        mode: host
     deploy:
       mode: replicated
       replicas: 1
@@ -12,13 +14,13 @@ services:
         traefik.docker.network: traefik-net
         traefik.frontend.rule: PathPrefix:/api/${MICROSERVICE_NAME}
         traefik.backend: ${MICROSERVICE_NAME}
-      placement:
-        constraints:
-          - node.role == worker
       restart_policy:
         condition: on-failure
-        max_attempts: 3
-
-networks:
-  traefik-net:
-    external: true
+        delay: 1m
+        window: 3m
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          memory: 410M
