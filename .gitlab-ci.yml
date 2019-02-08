@@ -6,7 +6,7 @@ stages:
 
 maven-build:
   stage: build
-  image: registry.gitlab.com/redmic-project/docker/maven
+  image: registry.gitlab.com/redmic-project/docker/maven:${MAVEN_IMAGE_TAG}
   variables:
     MAVEN_OPTS: -Dmaven.repo.local=.m2/repository
     SPRING_PROFILES_ACTIVE: test
@@ -109,7 +109,7 @@ container-scanning:
 
 deploy-dev:
   stage: deploy
-  image: registry.gitlab.com/redmic-project/docker/docker-deploy
+  image: registry.gitlab.com/redmic-project/docker/docker-deploy:${DOCKER_DEPLOY_IMAGE_TAG}
   variables:
     DOCKER_DRIVER: overlay2
     SSH_REMOTE: ${DEV_SSH_REMOTE}
@@ -137,7 +137,7 @@ deploy-dev:
 
 deploy-supporting-branch:
   stage: deploy
-  image: registry.gitlab.com/redmic-project/docker/docker-deploy
+  image: registry.gitlab.com/redmic-project/docker/docker-deploy:${DOCKER_DEPLOY_IMAGE_TAG}
   variables:
     DOCKER_DRIVER: overlay2
     SSH_REMOTE: ${DEV_SSH_REMOTE}
@@ -169,7 +169,7 @@ deploy-supporting-branch:
 
 deploy-pro:
   stage: deploy
-  image: registry.gitlab.com/redmic-project/docker/docker-deploy
+  image: registry.gitlab.com/redmic-project/docker/docker-deploy:${DOCKER_DEPLOY_IMAGE_TAG}
   variables:
     DOCKER_DRIVER: overlay2
     SSH_REMOTE: ${PRO_SSH_REMOTE}
