@@ -14,7 +14,7 @@
 	<groupId>es.redmic</groupId>
 	<artifactId>oauth</artifactId>
 	<packaging>jar</packaging>
-	<version>0.6.0</version>
+	<version>0.7.0</version>
 	<name>OAuth</name>
 	<description>Oauth authorization server</description>
 	
