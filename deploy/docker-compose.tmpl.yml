@@ -9,7 +9,7 @@ services:
       - SPRING_PROFILES_ACTIVE
       - SPRING_DATASOURCE_USERNAME
       - SPRING_DATASOURCE_PASSWORD
-      - JAVA_OPTS=-XX:MaxRAMFraction=1
+      - JAVA_OPTS=-XX:MaxRAMFraction=2
     networks:
       - postgres-net
       - redmic-net
@@ -30,12 +30,6 @@ services:
       restart_policy:
         delay: 1m
         window: 3m
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
-        reservations:
-          memory: 410M
 
 networks:
   postgres-net:
