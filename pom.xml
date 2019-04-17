@@ -14,7 +14,7 @@
 	<groupId>es.redmic</groupId>
 	<artifactId>oauth</artifactId>
 	<packaging>jar</packaging>
-	<version>0.7.0</version>
+	<version>0.7.0-feature-updateCI</version>
 	<name>OAuth</name>
 	<description>Oauth authorization server</description>
 	
@@ -32,9 +32,6 @@
 
 		<!-- Plugins -->
 		<jacoco.version>0.8.1</jacoco.version>
-		
-		<!-- Environment variables -->
-		<env.MAVEN_REPO_URL>https://artifactory.redmic.net/artifactory</env.MAVEN_REPO_URL>
 	</properties>
 
 	<dependencies>
@@ -101,19 +98,18 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<distributionManagement>
+	<repositories>
 		<repository>
 			<id>central</id>
-			<name>redmic-releases</name>
-			<url>${env.MAVEN_REPO_URL}/libs-release-local</url>
+			<name>libs-release</name>
+			<url>https://artifactory.redmic.net/artifactory/libs-release</url>
 		</repository>
-		<snapshotRepository>
+		<repository>
 			<id>snapshots</id>
-			<name>redmic-snapshots</name>
-			<url>${env.MAVEN_REPO_URL}/libs-snapshot-local</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-	</distributionManagement>
+			<name>libs-snapshot</name>
+			<url>https://artifactory.redmic.net/artifactory/libs-snapshot</url>
+		</repository>
+	</repositories>
 	<build>
 		<plugins>
 			<plugin>
