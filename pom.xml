@@ -4,37 +4,23 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.0.RELEASE</version>
+		<groupId>es.redmic</groupId>
+		<artifactId>server-parent</artifactId>
+		<version>0.1.0</version>
 		<relativePath />
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>es.redmic</groupId>
 	<artifactId>oauth</artifactId>
 	<packaging>jar</packaging>
-	<version>0.7.0</version>
+	<version>0.8.0</version>
 	<name>OAuth</name>
 	<description>Oauth authorization server</description>
 	
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<java.version>1.8</java.version>
-		<tomcat.version>8.5.28</tomcat.version>
-
 		<!-- REDMIC -->
 		<redmic.db-commons.version>0.6.0</redmic.db-commons.version>
 		<redmic.exceptions.version>0.6.0</redmic.exceptions.version>
-
-		<!-- Plugins -->
-		<jacoco.version>0.8.1</jacoco.version>
-		
-		<!-- Environment variables -->
-		<env.MAVEN_REPO_URL>https://artifactory.redmic.net/artifactory</env.MAVEN_REPO_URL>
 	</properties>
 
 	<dependencies>
@@ -81,17 +67,6 @@
 		    <groupId>io.micrometer</groupId>
 		    <artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
-		
-		<!-- Logs -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-		</dependency>
 
 		<!-- tests -->
 
@@ -101,19 +76,18 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<distributionManagement>
+	<repositories>
 		<repository>
 			<id>central</id>
-			<name>redmic-releases</name>
-			<url>${env.MAVEN_REPO_URL}/libs-release-local</url>
+			<name>libs-release</name>
+			<url>https://artifactory.redmic.net/artifactory/libs-release</url>
 		</repository>
-		<snapshotRepository>
+		<repository>
 			<id>snapshots</id>
-			<name>redmic-snapshots</name>
-			<url>${env.MAVEN_REPO_URL}/libs-snapshot-local</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-	</distributionManagement>
+			<name>libs-snapshot</name>
+			<url>https://artifactory.redmic.net/artifactory/libs-snapshot</url>
+		</repository>
+	</repositories>
 	<build>
 		<plugins>
 			<plugin>
@@ -129,26 +103,6 @@
 							<finalName>oauth</finalName>
 							<outputDirectory>dist</outputDirectory>
 						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${jacoco.version}</version>
-				<executions>
-					<execution>
-						<id>pre-unit-test</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>post-unit-test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
 					</execution>
 				</executions>
 			</plugin>
