@@ -54,7 +54,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 		authenticationEntryPoint.setRealmName("springsec/client");
 		authenticationEntryPoint.setTypeName("Basic");
 
-		// @formatter:on
+		// @formatter:off
 
 		http.anonymous().and().authorizeRequests().antMatchers(HttpMethod.GET, "/oauth/actuator/**").permitAll();
 
@@ -65,6 +65,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
 		http.requestMatchers().antMatchers("/**").and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		// @formatter:off
+		// @formatter:on
 	}
 }
