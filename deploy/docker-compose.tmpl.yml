@@ -2,41 +2,48 @@ version: '3.5'
 
 services:
   oauth:
-    image: ${IMAGE_NAME}:${IMAGE_TAG:-latest}
+    image: ${IMAGE_NAME:-registry.gitlab.com/redmic-project/server/oauth}:${IMAGE_TAG:-latest}
     environment:
-      - MICROSERVICE_NAME
-      - MICROSERVICE_PORT
-      - SPRING_PROFILES_ACTIVE
-      - SPRING_DATASOURCE_USERNAME
-      - SPRING_DATASOURCE_PASSWORD
-      - JAVA_OPTS=-XX:MaxRAMFraction=2
+      MICROSERVICE_NAME:
+      MICROSERVICE_PORT:
+      SPRING_PROFILES_ACTIVE:
+      SPRING_DATASOURCE_USERNAME:
+      SPRING_DATASOURCE_PASSWORD:
+      JAVA_OPTS: -XX:MaxRAMFraction=2
     networks:
-      - postgres-net
-      - redmic-net
-      - traefik-net
+      postgres-net:
+      redmic-net:
+      traefik-net:
     healthcheck:
       test: wget --spider -q http://localhost:${MICROSERVICE_PORT}/api/${MICROSERVICE_NAME}/actuator/health
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 2m
+      interval: ${HEALTHCHECK_INTERVAL:-30s}
+      timeout: ${HEALTHCHECK_TIMEOUT:-10s}
+      retries: ${HEALTHCHECK_RETRIES:-3}
+      start_period: ${HEALTHCHECK_START_PERIOD:-2m}
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: ${REPLICAS:-1}
       labels:
         traefik.frontend.rule: Host:${PUBLIC_HOSTNAME};PathPrefix:/api/${MICROSERVICE_NAME}
         traefik.backend: ${MICROSERVICE_NAME}
         traefik.port: "${MICROSERVICE_PORT}"
       restart_policy:
-        delay: 1m
-        window: 3m
+        delay: ${RESTART_DELAY:-1m}
+      update_config:
+        delay: ${UPDATE_DELAY:-2m}
 
 networks:
   postgres-net:
+    name: ${POSTGRES_NET_NAME:-postgres-net}
+    driver: ${POSTGRES_NET_DRIVER:-overlay}
     external: true
 
   redmic-net:
+    name: ${REDMIC_NET_NAME:-redmic-net}
+    driver: ${REDMIC_NET_DRIVER:-overlay}
     external: true
 
   traefik-net:
+    name: ${TRAEFIK_NET_NAME:-traefik-net}
+    driver: ${TRAEFIK_NET_DRIVER:-overlay}
     external: true
