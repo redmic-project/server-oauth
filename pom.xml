@@ -82,7 +82,7 @@
 	</dependencies>
 	<repositories>
 		<repository>
-			<id>central</id>
+			<id>release</id>
 			<name>libs-release</name>
 			<url>${maven.release.url}</url>
 		</repository>
