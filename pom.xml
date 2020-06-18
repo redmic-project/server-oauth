@@ -87,7 +87,7 @@
 			<url>${maven.release.url}</url>
 		</repository>
 		<repository>
-			<id>snapshots</id>
+			<id>snapshot</id>
 			<name>libs-snapshot</name>
 			<url>${maven.snapshot.url}</url>
 		</repository>
