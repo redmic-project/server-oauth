@@ -80,12 +80,12 @@
 		<repository>
 			<id>central</id>
 			<name>libs-release</name>
-			<url>${env.MAVEN_RELEASE_URL}</url>
+			<url>${MAVEN_RELEASE_URL}</url>
 		</repository>
 		<repository>
 			<id>snapshots</id>
 			<name>libs-snapshot</name>
-			<url>${env.MAVEN_SNAPSHOT_URL}</url>
+			<url>${MAVEN_SNAPSHOT_URL}</url>
 		</repository>
 	</repositories>
 	<build>
