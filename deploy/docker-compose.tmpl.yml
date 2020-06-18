@@ -9,6 +9,7 @@ services:
       SPRING_PROFILES_ACTIVE:
       SPRING_DATASOURCE_USERNAME:
       SPRING_DATASOURCE_PASSWORD:
+      SPRING_DATASOURCE_URL:
       JAVA_OPTS: -XX:MaxRAMFraction=2
     networks:
       postgres-net:
