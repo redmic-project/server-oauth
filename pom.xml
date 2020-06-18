@@ -21,6 +21,10 @@
 		<!-- REDMIC -->
 		<redmic.db-commons.version>0.6.0</redmic.db-commons.version>
 		<redmic.exceptions.version>0.6.0</redmic.exceptions.version>
+
+		<maven.release.url>mavenReleaseUrl</maven.release.url>
+		<maven.snapshot.url>mavenSnapshotUrl</maven.snapshot.url>
+
 	</properties>
 
 	<dependencies>
