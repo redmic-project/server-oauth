@@ -3,6 +3,13 @@ version: '3.5'
 services:
   oauth:
     image: ${IMAGE_NAME:-registry.gitlab.com/redmic-project/server/oauth}:${IMAGE_TAG:-latest}
+    build:
+      context: ..
+      dockerfile: ${DOCKERFILE:-Dockerfile}
+      args:
+        PARENT_IMAGE_NAME:
+        PARENT_IMAGE_TAG:
+        MICROSERVICE_PORT:
     environment:
       MICROSERVICE_NAME:
       MICROSERVICE_PORT:
