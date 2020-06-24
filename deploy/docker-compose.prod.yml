@@ -2,6 +2,8 @@ version: '3.5'
 
 services:
   oauth:
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
     deploy:
       resources:
         limits:
