@@ -49,7 +49,7 @@ networks:
   redmic-net:
     name: ${REDMIC_NET_NAME:-redmic-net}
     driver: ${REDMIC_NET_DRIVER:-overlay}
-    external: true
+    attachable: ${REDMIC_NET_ATTACHABLE:-true}
 
   traefik-net:
     name: ${TRAEFIK_NET_NAME:-traefik-net}
