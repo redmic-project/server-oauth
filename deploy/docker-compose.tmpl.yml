@@ -32,9 +32,12 @@ services:
       mode: replicated
       replicas: ${REPLICAS:-1}
       labels:
-        traefik.frontend.rule: Host:${PUBLIC_HOSTNAME};PathPrefix:/api/${MICROSERVICE_NAME}
-        traefik.backend: ${MICROSERVICE_NAME}
-        traefik.port: "${MICROSERVICE_PORT}"
+        traefik.enable: 'true'
+
+        traefik.http.routers.redmic-oauth.entrypoints: ${TRAEFIK_ENTRYPOINT}
+        traefik.http.routers.redmic-oauth.rule: (Host(`${PUBLIC_HOSTNAME}`) || Host(`${TRAEFIK_SUBDOMAIN}.${PUBLIC_HOSTNAME}`)) && PathPrefix(`/api/${MICROSERVICE_NAME}`)
+
+        traefik.http.services.redmic-oauth.loadbalancer.server.port: ${MICROSERVICE_PORT}
       restart_policy:
         delay: ${RESTART_DELAY:-1m}
       update_config:
