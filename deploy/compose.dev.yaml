@@ -1,0 +1,4 @@
+services:
+  oauth:
+    environment:
+      SPRING_PROFILES_ACTIVE: pre

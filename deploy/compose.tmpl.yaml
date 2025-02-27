@@ -1,23 +1,13 @@
-version: '3.5'
-
 services:
   oauth:
     image: ${IMAGE_NAME:-registry.gitlab.com/redmic-project/server/oauth}:${IMAGE_TAG:-latest}
-    build:
-      context: ..
-      dockerfile: ${DOCKERFILE:-Dockerfile}
-      args:
-        PARENT_IMAGE_NAME:
-        PARENT_IMAGE_TAG:
-        MICROSERVICE_NAME:
-        MICROSERVICE_PORT:
     environment:
       MICROSERVICE_NAME:
       MICROSERVICE_PORT:
       SPRING_DATASOURCE_USERNAME:
       SPRING_DATASOURCE_PASSWORD:
       SPRING_DATASOURCE_URL:
-      JAVA_OPTS: -XX:MaxRAMFraction=2
+      JAVA_OPTS:
     networks:
       postgres-net:
       redmic-net:
@@ -27,21 +17,26 @@ services:
       interval: ${HEALTHCHECK_INTERVAL:-30s}
       timeout: ${HEALTHCHECK_TIMEOUT:-10s}
       retries: ${HEALTHCHECK_RETRIES:-10}
-      start_period: ${HEALTHCHECK_START_PERIOD:-5m}
+      start_period: ${HEALTHCHECK_START_PERIOD:-2m}
     deploy:
       mode: replicated
       replicas: ${REPLICAS:-1}
-      labels:
-        traefik.enable: 'true'
-
-        traefik.http.routers.redmic-oauth.entrypoints: ${TRAEFIK_ENTRYPOINT}
-        traefik.http.routers.redmic-oauth.rule: (Host(`${PUBLIC_HOSTNAME}`) || Host(`${TRAEFIK_SUBDOMAIN}.${PUBLIC_HOSTNAME}`)) && PathPrefix(`/api/${MICROSERVICE_NAME}`)
-
-        traefik.http.services.redmic-oauth.loadbalancer.server.port: ${MICROSERVICE_PORT}
       restart_policy:
-        delay: ${RESTART_DELAY:-1m}
+        delay: ${RESTART_DELAY:-10s}
       update_config:
         delay: ${UPDATE_DELAY:-2m}
+      labels:
+        traefik.enable: ${TRAEFIK_ENABLE:-true}
+        traefik.http.routers.redmic-oauth.entrypoints: ${TRAEFIK_ENTRYPOINT}
+        traefik.http.routers.redmic-oauth.rule: (Host(`${PUBLIC_HOSTNAME}`) || Host(`${TRAEFIK_SUBDOMAIN}.${PUBLIC_HOSTNAME}`)) && PathPrefix(`/api/${MICROSERVICE_NAME}`)
+        traefik.http.services.redmic-oauth.loadbalancer.server.port: ${MICROSERVICE_PORT}
+      resources:
+        limits:
+          cpus: '${RESOURCES_LIMITS_CPUS:-0.5}'
+          memory: ${RESOURCES_LIMITS_MEMORY:-1G}
+        reservations:
+          cpus: '${RESOURCES_RESERVATIONS_CPUS:-0.001}'
+          memory: ${RESOURCES_RESERVATIONS_MEMORY:-820M}
 
 networks:
   postgres-net:
